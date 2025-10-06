@@ -3,8 +3,8 @@ from Streaming.arquivo_de_midia import ArquivoDeMidia
 class Musica(ArquivoDeMidia):
     reproducoes = 0
 
-    def __init__(self, titulo, duracao, artista, genero: str, avaliacoes: list[int] = None):
-        super().__init__(titulo, duracao, artista) #herdou de ArquivoDeMidia
+    def _init_(self, titulo, duracao, artista, genero: str, avaliacoes: list[int] = None):
+        super()._init_(titulo, duracao, artista) #herdou de ArquivoDeMidia
         self.genero = genero
         self.avaliacoes = avaliacoes #if avaliacoes is not None else []
 
