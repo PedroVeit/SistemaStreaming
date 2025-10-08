@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 from Streaming.arquivo_de_midia import ArquivoDeMidia
 from Streaming.playlist import Playlist
 from Streaming.musica import Musica
@@ -23,4 +21,4 @@ class Analises:
         if not usuarios:
             return None
         return max(usuarios, key=lambda u: len(u.historico))
->>>>>>> 905612f51d08ceca885a0e20e0f2a129b9d6a7a8
+        
