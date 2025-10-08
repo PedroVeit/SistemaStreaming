@@ -1,6 +1,5 @@
 from .arquivo_de_midia import ArquivoDeMidia
 
-
 class Playlist:
       reproducoes = 0
     
@@ -9,7 +8,6 @@ class Playlist:
         self.usuario = usuario
         self.itens = itens
       
-
     def adicionar_midia(self, midia: ArquivoDeMidia):
         self.itens.append(midia)
 
@@ -39,4 +37,3 @@ class Playlist:
         if not isinstance(other, Playlist):
             return False
         (self.nome == other.nome and self.usario == other.usuario and self.itens == other.itens)
-
