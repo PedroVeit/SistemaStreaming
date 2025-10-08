@@ -1,14 +1,18 @@
 from .arquivo_de_midia import ArquivoDeMidia
 
-
 class Playlist:
       reproducoes = 0
     
     def __init__(self, nome: str, usuario, iens: list[ArquivoDeMidia]):
         self.nome = nome
         self.usuario = usuario
+<<<<<<< HEAD
         self.itens = itens     
 
+=======
+        self.itens = itens
+      
+>>>>>>> fc29345b6c91e27f6cd3d152eed5550e5517148a
     def adicionar_midia(self, midia: ArquivoDeMidia):
         self.itens.append(midia)
 
@@ -38,4 +42,3 @@ class Playlist:
         if not isinstance(other, Playlist):
             return False
         (self.nome == other.nome and self.usario == other.usuario and self.itens == other.itens)
-
