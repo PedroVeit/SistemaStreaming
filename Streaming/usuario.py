@@ -38,14 +38,14 @@ class Usuario:
     """
     # INOVAÇÃO: Métodos do sistema de favoritos
     def curtir_midia(self, midia):
-        """Curtir uma mídia e adicionar aos favoritos se não estiver."""
+       #Curtir uma mídia e adicionar aos favoritos se não estiver.
         if midia not in self.favoritos:
             self.favoritos.append(midia)
         midia.likes += 1
         print("Curtiu: %s" % midia.titulo)
 
     def descurtir_midia(self, midia):
-        """Descurtir uma mídia e remover dos favoritos."""
+        #Descurtir uma mídia e remover dos favoritos.
         if midia in self.favoritos:
             self.favoritos.remove(midia)
         if midia.likes > 0:
@@ -53,7 +53,7 @@ class Usuario:
         print("Descurtiu: %s" % midia.titulo)
 
     def listar_favoritos(self):
-        """Lista os favoritos do usuário."""
+        #Lista os favoritos do usuário.
         if not self.favoritos:
             print("Nenhum favorito ainda.")
             return
