@@ -7,8 +7,7 @@ class Playlist:
     def __init__(self, nome: str, usuario, iens: list[ArquivoDeMidia]):
         self.nome = nome
         self.usuario = usuario
-        self.itens = itens
-      
+        self.itens = itens     
 
     def adicionar_midia(self, midia: ArquivoDeMidia):
         self.itens.append(midia)
