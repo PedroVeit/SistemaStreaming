@@ -1,5 +1,4 @@
-TG1 - POD
--Professor Otávio Parraga
+TG1 - POD | Professor Otávio Parraga
 
 Pedro Veit - 24102565-9 | Gustavo Silveira - 24102305-9
 
