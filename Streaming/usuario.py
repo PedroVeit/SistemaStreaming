@@ -3,7 +3,6 @@ from Streaming.playlist import Playlist
 from Streaming.musica import Musica
 from Streaming.podcast import Podcast
 
-
 class Usuario:
     qntd_instancias = 0 #contador de instâncias da classe
 
