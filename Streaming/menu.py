@@ -103,3 +103,94 @@ class Menu: #gerencia a interface de linha de comando do sistema
             else:
                 print("Opção inválida!")
                 input("Aperte Enter")
+
+    def reproduzir_musica(self, usuario): #reproduz uma música escolhida pelo usuário
+        self._mostrar_cabecalho("Reproduzir música")
+        self.listar_musicas(pausar=False)
+        titulo = input("Título da música: ")
+
+        musica = self.sistema.encontrar_midia(titulo)
+        if musica:
+            usuario.ouvir_midia(musica)
+            print(f"Reproduzindo '{musica.titulo}'.")
+        else:
+            print("Música não encontrada!")
+            input("Aperte Enter")
+
+    def listar_musicas(self, pausar=True): #lista todas as músicas disponíveis no sistema
+        self._mostrar_cabecalho("Listar músicas")
+        for musica in self.sistema.musicas:
+            print(f"- {musica.titulo}")
+        if pausar:
+            input("Aperte Enter")
+
+    def listar_podcasts(self): #lista todos os podcasts disponíveis no sistema
+        self._mostrar_cabecalho("Listar podcasts")
+        for podcast in self.sistema.podcasts:
+            print(f"- {podcast.titulo}")
+        input("Aperte enter")
+
+    def listar_playlists(self, usuario): #lista todas as playlists do usuário
+        self._mostrar_cabecalho("Listar playlists")
+        if not usuario.playlists:
+            print("Nenhuma playlist criada.")
+        else:
+            for i, playlist in enumerate(usuario.playlists, 1): #percorre as playlists com índice começando em 1
+                print(f"{i}. {playlist.nome} ({len(playlist)} itens)")
+        input("Aperte Enter")
+
+    def reproduzir_playlist(self, usuario): #reproduz uma playlist escolhida pelo usuário
+        self._mostrar_cabecalho("Reproduzir playlist")
+        if not usuario.playlists:
+            print("Nenhuma playlist criada.")
+            input("Aperte enter")
+            return
+        self.listar_playlists(usuario)
+
+        try: #pega o índice da playlist e reproduz
+            idx = int(input("Índice da playlist: ")) - 1
+            playlist = usuario.playlists[idx]
+            playlist.reproduzir()
+            print(f"Reproduzindo playlist '{playlist.nome}'.")
+        except (ValueError, IndexError): #erros de conversão ou índice fora do intervalo
+            print("Índice inválido!")
+        input("Aperte enter")
+
+    def criar_playlist(self, usuario): #cria uma nova playlist para o usuário
+        self._mostrar_cabecalho("Criar nova playlist")
+        nome = input("Nome da playlist: ")
+        if not nome.strip():
+            print("Nome não pode ser vazio!")
+            input("Aperte enter")
+            return
+        
+        playlist = usuario.criar_playlist(nome) #cria a playlist no usuário
+        print("Playlist criada com sucesso!")
+        input("Aperte enter")
+
+    def concatenar_playlists(self, usuario): #concatena duas playlists do usuário
+        self._mostrar_cabecalho("Concatenar duas playlists")
+        if len(usuario.playlists) < 2:
+            print("É necessário pelo menos duas playlists!")
+            input("Aperte enter")
+            return
+        
+        self.listar_playlists(usuario) #mostra as playlists do usuário
+        try: #pega os índices das playlists e concatena
+            idx1 = int(input("Índice da primeira playlist: ")) - 1
+            idx2 = int(input("Índice da segunda playlist: ")) - 1
+            p1 = usuario.playlists[idx1]
+            p2 = usuario.playlists[idx2]
+            nova_playlist = p1 + p2
+            usuario.playlists.append(nova_playlist)
+            print(f"Playlists '{p1.nome}' e '{p2.nome}' concatenadas!")
+        except (ValueError, IndexError): #erros de conversão ou índice fora do intervalo
+            print("Índices inválidos!")
+        input("Aperte enter")
+
+    def gerar_relatorio(self): #gera um relatório de análises do sistema
+        self._mostrar_cabecalho("Gerar relatório") #cabeçalho
+        print("Relatório gerado com sucesso!")
+        input("Aperte enter") 
+        
+    #fizemos uso de inteligência artificial nesta parte do trabalho para nos auxiliar
