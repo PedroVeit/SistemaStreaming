@@ -1,31 +1,36 @@
 from .arquivo_de_midia import ArquivoDeMidia
 
 class Playlist:
-      reproducoes = 0
-    
-    def __init__(self, nome: str, usuario, iens: list[ArquivoDeMidia]):
+    def __init__(self, nome, usuario):
         self.nome = nome
         self.usuario = usuario
-        self.itens = itens     
+        self.itens = []
+        self.reproducoes = 0     
 
     def adicionar_midia(self, midia: ArquivoDeMidia):
         self.itens.append(midia)
 
     def remover_midia(self, midia: ArquivoDeMidia):
-        self.itens.append(midia)
+        self.itens.remove(midia)
 
     def reproduzir(self):
+        print(f"Reproduzindo a playlist {self.nome} do usuário {self.usuario.nome}:")
         self.reproducoes += 1
-        print('Músicas reproduzidas')
-        for i in self.itens:
-            print(i)
-            i.reproducoes += 1
-
-    def __add__(self, other):
-        nova = Playlist(self.nome, self.usuario)
-        nova.itens = list(self.itens) + list(other.itens)
-        nova.reproducoes = self.reproducoes + other.reproducoes
-        return nova
+        for midia in self.itens:
+            midia.reproduzir()
+        print(f"A playlist {self.nome} acabou de ser reproduzida.")
+        
+    def __add__(self, other): #concatena duas playlists para criar uma terceira.
+        if not isinstance(other, Playlist): 
+            raise NotImplementedError #só é possível concatenar com outra playlist
+        
+        if other is self:
+            raise ValueError #não é possível concatenar a mesma playlist
+        
+        nova_playlist = Playlist(self.nome, self.usuario)
+        nova_playlist.itens = list(self.itens) + list(other.itens)
+        nova_playlist.reproducoes = self.reproducoes + other.reproducoes
+        return nova_playlist
 
     def __len__(self):
         return len(self.itens)
@@ -35,5 +40,5 @@ class Playlist:
 
     def __eq__(self, other):
         if not isinstance(other, Playlist):
-            return False
+            return NotImplementedError #só é possível comparar com outra playlist
         (self.nome == other.nome and self.usario == other.usuario and self.itens == other.itens)
