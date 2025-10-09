@@ -26,7 +26,6 @@ class Playlist:
         
         if other is self:
             raise ValueError #não é possível concatenar a mesma playlist
-        
         nova_playlist = Playlist(self.nome, self.usuario)
         nova_playlist.itens = list(self.itens) + list(other.itens)
         nova_playlist.reproducoes = self.reproducoes + other.reproducoes
@@ -42,3 +41,9 @@ class Playlist:
         if not isinstance(other, Playlist):
             return NotImplementedError #só é possível comparar com outra playlist
         (self.nome == other.nome and self.usario == other.usuario and self.itens == other.itens)
+    
+    def __str__(self):
+        return f"A playlist {self.nome} foi criada pelo(a) {self.usuario.nome} , possui {len(self.itens)} mídias e o número de reproduções foi {self.reproducoes}."
+
+    def __repr__(self):
+        return f"Playlist(nome='{self.nome}', usuario='{self.usuario.nome}')"
