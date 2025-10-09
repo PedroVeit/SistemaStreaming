@@ -1,4 +1,4 @@
-# musica
+# música
 - Garota de Ipanema;Tom Jobim;290;Bossa Nova
 - Master of Puppets;Metallica;515;Heavy Metal
 - Umbrella;Rihanna;267;Pop
@@ -12,7 +12,7 @@
 - Flow Podcast 1000 
 - Especial de Aniversário;Flow;8100;Entretenimento;1000
 
-# usuario
+# usuário
 - Denise
 - Eduardo
 - Fernanda
@@ -21,3 +21,4 @@
 - Hits de Verão;Denise;Umbrella;Imagine;Garota de Ipanema
 - Pumping Iron;Eduardo;Master of Puppets;Rap God;Another Brick in the Wall
 - Acústicas;Fernanda;Imagine;I'm Yours;Garota de Ipanema
+
