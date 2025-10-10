@@ -142,7 +142,7 @@ class Menu: #gerencia a interface de linha de comando do sistema
             print("Nenhum podcast cadastrado no sistema.")
         else:
             for podcast in self.sistema.podcasts:
-                print(f"- {podcast.titulo} | Host: {podcast.host}") 
+                print(f"- {podcast.titulo} | Host: {podcast.artista}") 
         
         if pausar:
             input("Aperte enter")
