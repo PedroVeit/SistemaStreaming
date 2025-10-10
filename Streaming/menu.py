@@ -71,7 +71,7 @@ class Menu: #gerencia a interface de linha de comando do sistema
     def menu_usuario(self, usuario): #menu específico para cada usuário
         while True:
             self._mostrar_cabecalho(f"BEM-VINDO, {usuario.nome.upper()}")
-            print("1. Reproduzir uma música")
+            print("1. Reproduzir uma mídia") 
             print("2. Listar músicas")
             print("3. Listar podcasts")
             print("4. Listar playlists")
@@ -83,7 +83,7 @@ class Menu: #gerencia a interface de linha de comando do sistema
             escolha = input("Opção: ")
 
             if escolha == '1':
-                self.reproduzir_musica(usuario)
+                self.reproduzir_midia(usuario)
             elif escolha == '2':
                 self.listar_musicas()
             elif escolha == '3':
@@ -104,98 +104,86 @@ class Menu: #gerencia a interface de linha de comando do sistema
                 print("Opção inválida!")
                 input("Aperte Enter")
 
-    def reproduzir_midia(self, usuario): #reproduz uma mídia (música ou podcast)
-        self._exibir_cabecalho("Reproduzir mídia")
-        self.listar_midias(pausar=False)
-        titulo = input("Digite o título da mídia que deseja ouvir: ")
-        midia = self.sistema.encontrar_midia(titulo) #procura a mídia pelo título
+    def reproduzir_midia(self, usuario): #reproduz uma mídia escolhida pelo usuário
+        self._mostrar_cabecalho("Reproduzir Mídia (Música/Podcast)")
+        print("Mídias disponíveis (Músicas e Podcasts):")
+        
+        self.listar_musicas(pausar=False) 
+        self.listar_podcasts(pausar=False)
+        
+        titulo = input("Título da mídia que deseja reproduzir: ")
+
+        midia = self.sistema.encontrar_midia(titulo)
+        
         if midia:
             usuario.ouvir_midia(midia)
+            print(f"Reproduzindo '{midia.titulo}'.")
         else:
-            print(f"Mídia '{titulo}' não encontrada.")
-            self.sistema.log_erro(f"Mídia '{titulo}' não encontrada.") #log de erro
-        input("Pressione Enter para continuar...")
-
-    def listar_midias(self, pausar=True): #lista todas as mídias (músicas e podcasts)
-        self._exibir_cabecalho("Músicas e Podcasts")
-        print("\n--- Músicas ---")
-        for m in self.sistema.musicas:
-            print(m)
-
-        print("\n--- Podcasts ---")
-        for p in self.sistema.podcasts:
-            print(p)
-
-        if pausar:
-            input("\nAperte Enter")
-
-    def listar_playlists(self, usuario): #lista as playlists do usuário
-        self._exibir_cabecalho("Suas playlists")
-        if not usuario.playlists:
-            print("Você ainda não criou nenhuma playlist.")
-        else:
-            for i, p in enumerate(usuario.playlists): #mostra o índice e o nome da playlist
-                print(f"{i+1}. {p}")
+            print("Mídia (Música ou Podcast) não encontrada!")
+        
         input("Aperte Enter")
 
-    def criar_playlist(self, usuario): #cria uma nova playlist para o usuário
-        self._exibir_cabecalho("Criar uma nova playlist")
-        nome_playlist = input("Digite o nome da nova playlist: ")
-        if nome_playlist.strip() == "": #verifica se o nome é vazio
-            print("O nome da playlist não pode ser vazio.")
-            self.sistema.log_erro("Tentativa de criar playlist sem nome.")
+    def listar_musicas(self, pausar=True): #lista todas as músicas disponíveis no sistema
+        self._mostrar_cabecalho("Listar músicas")
+        
+        if not self.sistema.musicas: 
+            print("Nenhuma música cadastrada no sistema.")
+        else:
+            for musica in self.sistema.musicas:
+                print(f"- {musica.titulo} | Artista: {musica.artista}")
+        
+        if pausar:
+            input("Aperte Enter")
+
+    def listar_podcasts(self, pausar=True): #lista todos os podcasts disponíveis no sistema
+        self._mostrar_cabecalho("Listar podcasts")
+        
+        if not self.sistema.podcasts:
+            print("Nenhum podcast cadastrado no sistema.")
+        else:
+            for podcast in self.sistema.podcasts:
+                print(f"- {podcast.titulo} | Host: {podcast.host}") 
+        
+        if pausar:
+            input("Aperte enter")
+
+    def listar_playlists(self, usuario): #lista todas as playlists do usuário
+        self._mostrar_cabecalho("Listar playlists")
+        if not usuario.playlists:
+            print("Nenhuma playlist criada.")
+        else:
+            for i, playlist in enumerate(usuario.playlists, 1): #percorre as playlists com índice começando em 1
+                print(f"{i}. {playlist.nome} ({len(playlist)} itens)")
+        input("Aperte Enter")
+
+    def reproduzir_playlist(self, usuario): #reproduz uma playlist escolhida pelo usuário
+        self._mostrar_cabecalho("Reproduzir playlist")
+        if not usuario.playlists:
+            print("Nenhuma playlist criada.")
             input("Aperte enter")
             return
-        try:
-            playlist = usuario.criar_playlist(nome_playlist) #tenta criar a playlist
-            print("\nMídias disponíveis para adicionar à playlist:")
-            self.listar_midias()
             
-            while True: #loop para adicionar mídias à playlist
-                print("\nAdicionar mídia à playlist:")
-                titulo_midia = input("Título da mídia: ")
-                if not titulo_midia:
-                    break
-                midia = self.sistema.encontrar_midia(titulo_midia)
-                if midia:
-                    playlist.adicionar_midia(midia)
-                    print(f"'{midia.titulo}' adicionada.")
-                else:
-                    print(f"Mídia '{titulo_midia}' não encontrada.")
+        self.listar_playlists(usuario)
 
-            if not playlist.itens: #verifica se a playlist está vazia
-                usuario.playlists.remove(playlist)
-                print("Atenção: A playlist está vazia. Não será criada.")
-                self.sistema.log_erro(f"Playlist '{nome_playlist}' não criada por estar vazia.")
-            else:
-                print(f"Playlist '{nome_playlist}' criada")
-
-        except ValueError as e: #erro de playlist já existente
-            print(f"Erro: {e}")
-            self.sistema.log_erro(str(e))
-
-        input("Pressione Enter para continuar...")
-
-    def reproduzir_playlist(self, usuario): #reproduz uma playlist do usuário
-        self._exibir_cabecalho("Reproduzir uma playlist")
-        if not usuario.playlists: #verifica se o usuário tem playlists
-            print("Você ainda não criou nenhuma playlist.")
-            self.sistema.log_erro("Tentativa de reproduzir playlist sem playlists criadas.")
-            input("Pressione Enter para continuar...")
-            return
-        i = 0 #mostra as playlists com índices
-        for p in usuario.playlists: #itera sobre as playlists do usuário
-            print(f"{i}. {p.nome} ({len(p)} itens)")
-            i += 1
-
-        try: #tenta pegar o índice da playlist e reproduzir
-            idx = int(input("Índice da playlist para reproduzir: "))
+        try: #pega o índice da playlist e reproduz
+            idx = int(input("Índice da playlist: ")) - 1
             playlist = usuario.playlists[idx]
-            playlist.reproduzir()
+            playlist.reproduzir() 
+            print(f"Reproduzindo playlist '{playlist.nome}'.")
         except (ValueError, IndexError): #erros de conversão ou índice fora do intervalo
-            print("Erro: índice inválido.")
-            self.sistema.log_erro("Índice de playlist inválido ao tentar reproduzir.")
+            print("Índice inválido!")
+        input("Aperte enter")
 
+    def criar_playlist(self, usuario): #cria uma nova playlist para o usuário
+        self._mostrar_cabecalho("Criar nova playlist")
+        nome = input("Nome da playlist: ")
+        if not nome.strip():
+            print("Nome não pode ser vazio!")
+            input("Aperte enter")
+            return
+        
+        playlist = usuario.criar_playlist(nome) #cria a playlist no usuário
+        print("Playlist criada com sucesso!")
         input("Aperte enter")
 
     def concatenar_playlists(self, usuario): #concatena duas playlists do usuário
@@ -211,7 +199,9 @@ class Menu: #gerencia a interface de linha de comando do sistema
             idx2 = int(input("Índice da segunda playlist: ")) - 1
             p1 = usuario.playlists[idx1]
             p2 = usuario.playlists[idx2]
-            nova_playlist = p1 + p2
+            
+            nova_playlist = p1 + p2 
+            
             usuario.playlists.append(nova_playlist)
             print(f"Playlists '{p1.nome}' e '{p2.nome}' concatenadas!")
         except (ValueError, IndexError): #erros de conversão ou índice fora do intervalo
@@ -221,6 +211,6 @@ class Menu: #gerencia a interface de linha de comando do sistema
     def gerar_relatorio(self): #gera um relatório de análises do sistema
         self._mostrar_cabecalho("Gerar relatório") #cabeçalho
         print("Relatório gerado com sucesso!")
-        input("Aperte enter") 
+        input("Aperte enter")
         
     #fizemos uso de inteligência artificial nesta parte do trabalho para nos auxiliar
