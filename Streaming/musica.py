@@ -1,10 +1,8 @@
 from Streaming.arquivo_de_midia import ArquivoDeMidia
 
 class Musica(ArquivoDeMidia):
-    reproducoes = 0
-
-    def _init_(self, titulo, duracao, artista, genero: str): 
-        super()._init_(titulo, duracao, artista) #herdou de ArquivoDeMidia
+    def __init__(self, titulo, artista, duracao, genero: str): 
+        super().__init__(titulo, artista, duracao)
         self.genero = genero
         self.avaliacoes = [ ] #lista para armazenar as avaliações da música]
 
@@ -17,7 +15,6 @@ class Musica(ArquivoDeMidia):
 
     def reproduzir(self):
         super().reproduzir()
-        Musica.reproducoes += 1
     
     def __str__(self):
         return f"Música: {self.titulo} ; Artista: {self.artista} ; Duração: {self.duracao} segundos ; Gênero: {self.genero} ; Avaliações: {self.avaliacoes} ;"

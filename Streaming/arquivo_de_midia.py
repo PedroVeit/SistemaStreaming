@@ -1,8 +1,8 @@
 from abc import ABC, abstractmethod
 
-class ArquivoDeMidia:
+class ArquivoDeMidia(ABC):
     @abstractmethod
-    def __init__(self, titulo, duracao, artista):
+    def __init__(self, titulo, artista, duracao):
         self.titulo = titulo
         self.duracao = duracao
         self.artista = artista

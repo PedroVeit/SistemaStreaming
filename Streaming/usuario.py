@@ -25,4 +25,4 @@ class Usuario:
         return f"Usuario(nome='{self.nome}' , playlists={len(self.playlists)}, historico={len(self.historico)})"
 
     def __str__(self):
-        return f"Usuário: {self.usuario} ; Playlists: {len(self.playlists)} ; Histórico de reprodução: {len(self.historico)} ;"
+        return f"Usuário: {self.nome} ; Playlists: {len(self.playlists)} ; Histórico de reprodução: {len(self.historico)} ;"

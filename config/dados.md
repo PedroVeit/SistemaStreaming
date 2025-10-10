@@ -9,7 +9,7 @@
 
 # PODCASTS
 - PrimoCast #250;Thiago Nigro;9500;Economia;250
-- Flow Podcast 1000;Flow;8100;Entretenimento;1000
+- Flow Podcast 1000 - Especial de Aniversário;Flow;8100;Entretenimento;1000
 
 # USUARIOS
 - Denise

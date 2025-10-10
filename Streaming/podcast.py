@@ -1,8 +1,6 @@
 from .arquivo_de_midia import ArquivoDeMidia
 
 class Podcast(ArquivoDeMidia):
-    reproducoes = 0
-    
     def __init__(self, titulo: str, host: str, duracao: int, temporada: str, episodio: int):
         super().__init__(titulo, host, duracao)  # host é o artista da classe pai.
         self.temporada = temporada
