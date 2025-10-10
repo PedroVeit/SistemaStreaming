@@ -1,4 +1,4 @@
-# música
+# MUSICAS
 - Garota de Ipanema;Tom Jobim;290;Bossa Nova
 - Master of Puppets;Metallica;515;Heavy Metal
 - Umbrella;Rihanna;267;Pop
@@ -7,17 +7,16 @@
 - Another Brick in the Wall;Pink Floyd;239;Rock
 - Rap God;Eminem;363;Rap
 
-# podcast
+# PODCASTS
 - PrimoCast #250;Thiago Nigro;9500;Economia;250
-- Flow Podcast 1000 
-- Especial de Aniversário;Flow;8100;Entretenimento;1000
+- Flow Podcast 1000;Flow;8100;Entretenimento;1000
 
-# usuário
+# USUARIOS
 - Denise
 - Eduardo
 - Fernanda
 
-# playlist
+# PLAYLISTS
 - Hits de Verão;Denise;Umbrella;Imagine;Garota de Ipanema
 - Pumping Iron;Eduardo;Master of Puppets;Rap God;Another Brick in the Wall
 - Acústicas;Fernanda;Imagine;I'm Yours;Garota de Ipanema
